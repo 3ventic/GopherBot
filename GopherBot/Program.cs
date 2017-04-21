@@ -62,7 +62,7 @@ namespace GopherBot
             Console.WriteLine($"[Received] {message.Channel.Name} - {welcomeChannel?.Name}: {message.Content}");
             if (message.Channel.Id == welcomeChannel?.Id)
             {
-                if (message.Content.ToLower().Contains("@GopherBot") || message.MentionedUsers.Contains(client.CurrentUser))
+                if (message.Content.ToLower().Contains("@GopherBot") || message.MentionedUsers.Select(mention => mention.Id == client.CurrentUser.Id).Count() > 0)
                 {
                     SocketGuildUser user = (SocketGuildUser) message.Author;
                     await user.AddRoleAsync(role);
