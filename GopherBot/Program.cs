@@ -32,8 +32,23 @@ namespace GopherBot
 
         private Task Client_Connected() => Task.Run(() =>
                                                      {
-                                                         welcomeChannel = (ISocketMessageChannel) client.GetChannel(304963802904920065L); /// TODO: read from config
-                                                         role = client.GetGuild(231457403546107905L).GetRole(304973381860851714L); /// TODO: read from config
+                                                         SocketGuild guild = client.CurrentUser.Discord.Guilds.First();
+                                                         foreach (SocketTextChannel channel in guild.TextChannels)
+                                                         {
+                                                             if (channel.Name == "welcome")
+                                                             {
+                                                                 welcomeChannel = channel;
+                                                                 break;
+                                                             }
+                                                         }
+                                                         foreach (IRole grole in guild.Roles)
+                                                         {
+                                                             if (grole.Name == "Minion")
+                                                             {
+                                                                 role = grole;
+                                                                 break;
+                                                             }
+                                                         }
                                                          Console.WriteLine($"Connected. Welcome channel {welcomeChannel?.Name}, role {role?.Name}");
                                                      });
 
