@@ -37,10 +37,18 @@ namespace GopherBot
             if (guild.Id == 231457403546107905L) /// TODO: read from config
             {
                 welcomeChannel = (ISocketMessageChannel)client.GetChannel(304963802904920065L); /// TODO: read from config
-                role = guild.GetRole(304973381860851714L); /// TODO: read from config
+                foreach (IRole grole in guild.Roles)
+                {
+                    Console.WriteLine($"Role: {grole.Name} ({grole.Id})");
+                    if (grole.Name == "Minion")
+                    {
+                        role = grole;
+                    }
+                }
                 Console.WriteLine($"Welcome channel {welcomeChannel?.Name}, role {role?.Name}");
             }
         });
+
         private Task Client_Connected() => Task.Run(() =>
         {
             Console.WriteLine($"Connected.");
