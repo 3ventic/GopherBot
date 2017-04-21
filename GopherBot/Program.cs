@@ -21,6 +21,7 @@ namespace GopherBot
         private async Task Run(string token)
         {
             client.Connected += Client_Connected;
+            client.GuildAvailable += Client_GuildAvailable;
             client.MessageReceived += Client_MessageReceived;
             client.UserJoined += Client_UserJoined;
 
@@ -30,29 +31,19 @@ namespace GopherBot
             await Task.Delay(-1);
         }
 
+        private Task Client_GuildAvailable(SocketGuild guild) => Task.Run(() =>
+        {
+            Console.WriteLine($"Guild available: {guild.Name} ({guild.Id})");
+            if (guild.Id == 231457403546107905L) /// TODO: read from config
+            {
+                welcomeChannel = (ISocketMessageChannel)client.GetChannel(304963802904920065L); /// TODO: read from config
+                role = guild.GetRole(304973381860851714L); /// TODO: read from config
+            }
+        });
         private Task Client_Connected() => Task.Run(() =>
-                                                     {
-                                                         SocketGuild guild = client.CurrentUser.Discord.Guilds.First();
-                                                         foreach (SocketTextChannel channel in guild.TextChannels)
-                                                         {
-                                                             Console.WriteLine($"{channel.Name}");
-                                                             if (channel.Name == "welcome")
-                                                             {
-                                                                 welcomeChannel = channel;
-                                                                 break;
-                                                             }
-                                                         }
-                                                         foreach (IRole grole in guild.Roles)
-                                                         {
-                                                             Console.WriteLine($"{grole.Name}");
-                                                             if (grole.Name == "Minion")
-                                                             {
-                                                                 role = grole;
-                                                                 break;
-                                                             }
-                                                         }
-                                                         Console.WriteLine($"Connected. Welcome channel {welcomeChannel?.Name}, role {role?.Name}");
-                                                     });
+        {
+            Console.WriteLine($"Connected. Welcome channel {welcomeChannel?.Name}, role {role?.Name}");
+        });
 
         private async Task Client_UserJoined(SocketGuildUser user)
             => await welcomeChannel.SendMessageAsync($"Welcome, {user.Mention}! Please @ me to get full Minion access to the Discord. See #info for useful general information.");
