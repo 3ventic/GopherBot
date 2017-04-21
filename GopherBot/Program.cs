@@ -35,6 +35,7 @@ namespace GopherBot
                                                          SocketGuild guild = client.CurrentUser.Discord.Guilds.First();
                                                          foreach (SocketTextChannel channel in guild.TextChannels)
                                                          {
+                                                             Console.WriteLine($"{channel.Name}");
                                                              if (channel.Name == "welcome")
                                                              {
                                                                  welcomeChannel = channel;
@@ -43,6 +44,7 @@ namespace GopherBot
                                                          }
                                                          foreach (IRole grole in guild.Roles)
                                                          {
+                                                             Console.WriteLine($"{grole.Name}");
                                                              if (grole.Name == "Minion")
                                                              {
                                                                  role = grole;
