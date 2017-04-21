@@ -38,11 +38,12 @@ namespace GopherBot
             {
                 welcomeChannel = (ISocketMessageChannel)client.GetChannel(304963802904920065L); /// TODO: read from config
                 role = guild.GetRole(304973381860851714L); /// TODO: read from config
+                Console.WriteLine($"Welcome channel {welcomeChannel?.Name}, role {role?.Name}");
             }
         });
         private Task Client_Connected() => Task.Run(() =>
         {
-            Console.WriteLine($"Connected. Welcome channel {welcomeChannel?.Name}, role {role?.Name}");
+            Console.WriteLine($"Connected.");
         });
 
         private async Task Client_UserJoined(SocketGuildUser user)
