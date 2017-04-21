@@ -60,7 +60,7 @@ namespace GopherBot
         private async Task Client_MessageReceived(SocketMessage message)
         {
             Console.WriteLine($"[Received] {message.Channel.Name} - {welcomeChannel?.Name}: {message.Content}");
-            if (message.Channel.Id == welcomeChannel?.Id)
+            if (!message.Author.IsBot && message.Channel.Id == welcomeChannel?.Id)
             {
                 if (message.Content.ToLower().Contains("@GopherBot") || message.MentionedUsers.Where(mention => mention.Id == client.CurrentUser.Id).Count() > 0)
                 {
