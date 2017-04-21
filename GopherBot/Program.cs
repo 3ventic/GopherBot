@@ -55,7 +55,7 @@ namespace GopherBot
         });
 
         private async Task Client_UserJoined(SocketGuildUser user)
-            => await welcomeChannel.SendMessageAsync($"Welcome, {user.Mention}! Please @ me to get full Minion access to the Discord. See #info for useful general information.");
+            => await welcomeChannel.SendMessageAsync($"Welcome, {user.Mention}! Please @ me ({client.CurrentUser.Mention}) to get full Minion access to the Discord. See #info for useful general information.");
 
         private async Task Client_MessageReceived(SocketMessage message)
         {
