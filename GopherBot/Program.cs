@@ -24,6 +24,7 @@ namespace GopherBot
             client.GuildAvailable += Client_GuildAvailable;
             client.MessageReceived += Client_MessageReceived;
             client.UserJoined += Client_UserJoined;
+            client.Disconnected += Client_Disconnected;
 
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
@@ -31,6 +32,7 @@ namespace GopherBot
             await Task.Delay(-1);
         }
 
+        private Task Client_Disconnected(Exception arg) => Task.Run(() => Console.WriteLine($"Disconnected: {arg}"));
         private Task Client_GuildAvailable(SocketGuild guild) => Task.Run(() =>
         {
             Console.WriteLine($"Guild available: {guild.Name} ({guild.Id})");
