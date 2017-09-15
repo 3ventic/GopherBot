@@ -8,7 +8,7 @@ namespace GopherBot
 {
     class Program
     {
-        static void Main(string[] args) => new Program().Run(args[0]).Wait(); /// TODO: read token from config
+        static void Main(string[] args) => new Program().Run().Wait();
 
         private DiscordSocketClient client = new DiscordSocketClient();
         private ISocketMessageChannel welcomeChannel = null;
@@ -18,8 +18,9 @@ namespace GopherBot
             RetryMode = RetryMode.RetryRatelimit
         };
 
-        private async Task Run(string token)
+        private async Task Run()
         {
+            string token = Environment.GetEnvironmentVariable("GOPHERTOKEN");
             client.Connected += Client_Connected;
             client.GuildAvailable += Client_GuildAvailable;
             client.MessageReceived += Client_MessageReceived;
